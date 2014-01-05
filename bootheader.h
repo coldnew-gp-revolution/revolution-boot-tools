@@ -26,10 +26,10 @@
 #ifndef __BOOTHEADER__
 #define __BOOTHEADER__
 
-#ifdef LENOVO_IMAGE
-#define HEAD_PADDING						(0x3e0) /* Lenovo K900 */
-#else
+#ifdef RAZRI_IMAGE
 #define HEAD_PADDING						(0) /* Motorola RAZR i */
+#else
+#define HEAD_PADDING						(0x3e0) /* Common Android Intel Image */
 #endif
 
 #define CMDLINE_SIZE   						(0x400)

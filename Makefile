@@ -1,8 +1,8 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -pedantic -std=c99 -D_BSD_SOURCE
 
-ifneq ($(LENOVO_IMAGE),)
-	CFLAGS+=-DLENOVO_IMAGE=1
+ifneq ($(RAZRI_IMAGE),)
+	CFLAGS+=-DRAZRI_IMAGE=1
 endif
 
 .PHONY: clean
