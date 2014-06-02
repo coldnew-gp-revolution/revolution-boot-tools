@@ -7,13 +7,13 @@ endif
 
 .PHONY: clean
 
-all: pack unpack
+all: pack_intel unpack_intel
 
 clean:
-	rm -f *.o pack unpack pack.exe unpack.exe
+	rm -f *.o pack_intel unpack_intel pack_intel.exe unpack_intel.exe
 
-pack: pack.o
+pack_intel: pack.o
 	$(CC) -o $@ $< $(CFLAGS)
 
-unpack: unpack.o
+unpack_intel: unpack.o
 	$(CC) -o $@ $< $(CFLAGS)
