@@ -10,7 +10,7 @@ endif
 all: pack unpack
 
 clean:
-	rm -f *.o pack unpack
+	rm -f *.o pack unpack pack.exe unpack.exe
 
 pack: pack.o
 	$(CC) -o $@ $< $(CFLAGS)
