@@ -10,7 +10,7 @@ endif
 all: pack_intel unpack_intel
 
 clean:
-	rm -f *.o pack_intel unpack_intel pack_intel.exe unpack_intel.exe
+	rm -f *.o pack_intel unpack_intel pack_intel.exe unpack_intel.exe *~
 
 pack_intel: pack.o
 	$(CC) -o $@ $< $(CFLAGS)
