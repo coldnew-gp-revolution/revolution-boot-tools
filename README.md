@@ -1,53 +1,38 @@
-intel-boot-tools
-================
+### ZenFone boot tools
 
-Tools to pack/unpack RAZR i bootimages
+Fork from https://github.com/sndnvaps/intel-boot-tools
 
-support `Moto RAZR i` /  `lenove K900`
-
-
-original source
-
-http://forum.xda-developers.com/showthread.php?t=1972589
-
-https://github.com/turl/razr-i-boot-tools
-
-Just run "make" to build the tools, the usage is really simple
-
-Code:
-
-	$ ./pack 
-
-	Usage: ./pack original-image bzImage ramdisk output.img
-
-	example: ./pack ./recovery.img zImage ramdisk.cpio.gz new-recovery.img 
-
-From left to right, an already existing boot image (to copy bootstub from, it could be built from source on the future), the kernel, the gzipped cpio ramdisk and the output filename
-
-Code:
-
-	$ ./unpack
-
-	Usage: ./unpack original-imgage bzImage-out ramdisk-out.cpio.gz
-
-	example: ./unpack ./recovery.img zImage ramdisk.cpio.gz 
+Tools to pack/unpack ZenFone 5/6 boot images
 
 
-From left to right, the image you want to unpack, and the destination files for bzImage and ramdisk. You can then unpack the ramdisk with something like
+### Build
 
-Code:
-```bash
-$ mkdir ramdisk-unpack
+- run `make` to build tools: `pack_intel` & `unpack_intel`
 
-$ cd ramdisk-unpack
 
-$ zcat ../ramdisk.cpio.gz|cpio -i
-```
+### Usage
 
-And then repack it with something like
-Code:
+To build boot.img (or recovery.img) from custom kernel (bzImage) and initrd (ramdisk.cpio.gz), use original boot.img (or recovery.img) as input:
 
-	cd ramdisk-unpack 
+	$ pack_intel boot.img bzImage ramdisk.cpio.gz new_boot.img
 
-	$ find . | cpio -o -H newc | gzip > ../newramdisk.cpio.gz
+To extract kernel (bzImage) and initrd (ramdisk.cpio.gz) from boot.img (or recovery.img):
 
+	$ unpack_intel boot.img bzImage ramdisk.cpio.gz
+
+
+### How to get original boot.img
+
+For ZenFone 5
+- Go http://www.asus.com/Phones/ZenFone_5_A500CG/HelpDesk_Download/ and choose "Android" in OS field (or http://www.asus.com/support/Download/39/1/0/2/96nqlxHp1VKV4Rdz/32/)
+
+For ZenFone 6
+- Go http://www.asus.com/Phones/ZenFone_6_A600CG/HelpDesk_Download/ and choose "Android" in OS field (or http://www.asus.com/support/Download/39/1/0/3/paJ6GdiFh3rgCrfL/32/)
+
+- Choose ROM file from `firmware` section and download
+- Unzip ROM file and you'll see `boot.img`
+
+
+### How to get original recovery.img
+
+Please refer to: http://23pin.logdown.com/posts/222680-build-zenfone-recovery-image-from-bootimg
