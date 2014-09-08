@@ -1,7 +1,7 @@
 *.o
 *~
-pack
-unpack
+pack_intel
+unpack_intel
 pack.exe 
 unpack.exe
 
