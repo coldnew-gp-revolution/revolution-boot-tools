@@ -38,7 +38,7 @@
 // uint32_t * 4 = 0x10, total: 0x410
 
 #define PADDING1_SIZE						(0xbf0) // (0x1000-0x410)
-#define BOOTSTUBSTACK_SIZE					(0x1000)
+#define BOOTSTUBSTACK_SIZE					(0x2000)
 
 #define SECTOR_SIZE						(0x200)	// 512
 
@@ -64,7 +64,7 @@ struct bootheader {
 };
 
 /* Sanity check for struct size */
-typedef char z[(sizeof(struct bootheader) == HEADER_SIZE + HEAD_PADDING + UNKNOWN_SIZE + 0x2000) ? 1 : -1];
+typedef char z[(sizeof(struct bootheader) == HEADER_SIZE + HEAD_PADDING + UNKNOWN_SIZE + 0x3000) ? 1 : -1];
 // 0x2000 = (size of cmdline + 16 + padding1) + (size of bootstubstack)
 
 #endif
