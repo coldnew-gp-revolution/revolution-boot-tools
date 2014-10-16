@@ -31,7 +31,7 @@
 #define HEADER_SIZE						(MAGIC_SIZE + 0x1 + ID_SIZE + 0x4 + 0x4)
 
 #define HEAD_PADDING                                            (0x1c8)
-#define UNKNOWN_SIZE                                            (0x400)
+#define UNKNOWN_SIZE                                            (0x2D8)
 
 #define CMDLINE_SIZE   						(0x400)
 #define CMDLINE_END						(HEADER_SIZE + HEAD_PADDING + UNKNOWN_SIZE + CMDLINE_SIZE)
@@ -65,6 +65,6 @@ struct bootheader {
 
 /* Sanity check for struct size */
 typedef char z[(sizeof(struct bootheader) == HEADER_SIZE + HEAD_PADDING + UNKNOWN_SIZE + 0x1000 + BOOTSTUBSTACK_SIZE) ? 1 : -1];
-// 0x2000 = (size of cmdline + 16 + padding1) + (size of bootstubstack)
+// 0x1000 = (size of cmdline + 16 + padding1)
 
 #endif
