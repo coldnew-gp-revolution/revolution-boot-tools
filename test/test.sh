@@ -13,6 +13,14 @@ PACK=${D}/../pack_intel
 UNPACK=${D}/../unpack_intel
 
 # testing function
+error() {
+    echo -e "\n\033[31m\033[1mERROR: $1\033[0m\n"
+}
+die () {
+    error "$1"
+    exit 1
+}
+
 check_image_unpack() {
     local image=$1
     local kernel=$2
@@ -24,15 +32,13 @@ check_image_unpack() {
     # kernel should be kernel
     file $kernel | grep kernel
     if [ $? -ne 0 ]; then
-        echo "$image unpack to $kernel is invalid Linux kernel image."
-        exit -1
+        die "$image unpack to $kernel is invalid Linux kernel image."
     fi
 
     # ramdisk should be gzip compressed data
     file $ramdisk | grep gzip
     if [ $? -ne 0 ]; then
-        echo "$image unpack to $ramdisk is invalid gzip compressed data."
-        exit -1
+        die "$image unpack to $ramdisk is invalid gzip compressed data."
     fi
 }
 
@@ -49,8 +55,7 @@ check_image_repack() {
     # check if the same as original image
     cmp $image tmp
     if [ $? -ne 0 ]; then
-        echo "$image not the same as repack one."
-        exit -1
+        die "$image not the same as repack one."
     fi
 }
 
@@ -65,15 +70,14 @@ dummy_image_check() {
     # create dummy kernel/ramdisk
     touch $kernel $ramdisk
 
-    $PACK $CM_IMAGE $kernel $ramdisk dummy1
+    $PACK $image $kernel $ramdisk dummy1
     $UNPACK dummy1  $kernel.tmp $ramdisk.tmp
-    $PACK $CM_IMAGE  $kernel.tmp $ramdisk.tmp dummy2
+    $PACK $image  $kernel.tmp $ramdisk.tmp dummy2
 
     # compare
     cmp dummy1 dummy2
     if [ $? -ne 0 ]; then
-        echo "dummy kernel/ramdisk test failed (valid image: $image)"
-        exit -1
+        die "dummy kernel/ramdisk test failed (valid image: $image)"
     fi
 
     # clear all
@@ -95,4 +99,5 @@ dummy_image_check $CM_IMAGE       d1-kernel      d1-ramdisk
 dummy_image_check $ANDROID_IMAGE  d2-kernel      d2-ramdisk
 dummy_image_check $FFOS_IMAGE     d3-kernel      d3-ramdisk
 
-echo "unitest pass"
+echo ""
+echo "UNITTEST PASS"
