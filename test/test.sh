@@ -54,6 +54,32 @@ check_image_repack() {
     fi
 }
 
+dummy_image_check() {
+    local image=$1
+    local kernel=$2
+    local ramdisk=$3
+
+    # make sure no samename dummy kernel present
+    rm -rf $kernel $ramdisk dummy1 dummy2 > /dev/null 2>&1
+
+    # create dummy kernel/ramdisk
+    touch $kernel $ramdisk
+
+    $PACK $CM_IMAGE $kernel $ramdisk dummy1
+    $UNPACK dummy1  $kernel.tmp $ramdisk.tmp
+    $PACK $CM_IMAGE  $kernel.tmp $ramdisk.tmp dummy2
+
+    # compare
+    cmp dummy1 dummy2
+    if [ $? -ne 0 ]; then
+        echo "dummy kernel/ramdisk test failed (valid image: $image)"
+        exit -1
+    fi
+
+    # clear all
+    rm -rf $kernel.tmp $ramdisk.tmp dummy1 dummy2 > /dev/null 2>&1
+}
+
 # check for image unpack
 check_image_unpack $CM_IMAGE      cm-kernel      cm-ramdisk
 check_image_unpack $ANDROID_IMAGE android-kernel android-ramdisk
@@ -64,17 +90,9 @@ check_image_repack $CM_IMAGE      cm-kernel      cm-ramdisk      $CM_IMAGE
 check_image_repack $ANDROID_IMAGE android-kernel android-ramdisk $ANDROID_IMAGE
 check_image_repack $FFOS_IMAGE    ffos-kernel    ffos-ramdisk    $FFOS_IMAGE
 
-
 # create a dummy image and testing unpack/repack
-rm -rf tmp > /dev/null 2>&1
-touch dummy-kernel dummy-ramdisk
-$PACK $CM_IMAGE  dummy-kernel dummy-ramdisk dummy1
-$UNPACK dummy1   dummy1-kernel dummy1-ramdisk
-$PACK $CM_IMAGE  dummy1-kernel dummy1-ramdisk dummy2
-cmp dummy1 dummy2
-if [ $? -ne 0 ]; then
-    echo "dummy kernel/ramdisk test failed"
-    exit -1
-fi
+dummy_image_check $CM_IMAGE       d1-kernel      d1-ramdisk
+dummy_image_check $ANDROID_IMAGE  d2-kernel      d2-ramdisk
+dummy_image_check $FFOS_IMAGE     d3-kernel      d3-ramdisk
 
 echo "unitest pass"
