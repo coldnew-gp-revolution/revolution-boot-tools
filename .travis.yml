@@ -1,0 +1,18 @@
+language: c
+
+compiler:
+  - clang
+  - gcc
+
+branches:
+  only: revolution
+
+notifications:
+  email:
+    on_success: never
+
+install:
+  - sudo apt-get install -qq build-essential
+
+script:
+  - test/test.sh
