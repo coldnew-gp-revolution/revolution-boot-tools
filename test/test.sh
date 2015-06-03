@@ -64,4 +64,17 @@ check_image_repack $CM_IMAGE      cm-kernel      cm-ramdisk      $CM_IMAGE
 check_image_repack $ANDROID_IMAGE android-kernel android-ramdisk $ANDROID_IMAGE
 check_image_repack $FFOS_IMAGE    ffos-kernel    ffos-ramdisk    $FFOS_IMAGE
 
+
+# create a dummy image and testing unpack/repack
+rm -rf tmp > /dev/null 2>&1
+touch dummy-kernel dummy-ramdisk
+$PACK $CM_IMAGE  dummy-kernel dummy-ramdisk dummy1
+$UNPACK dummy1   dummy1-kernel dummy1-ramdisk
+$PACK $CM_IMAGE  dummy1-kernel dummy1-ramdisk dummy2
+cmp dummy1 dummy2
+if [ $? -ne 0 ]; then
+    echo "dummy kernel/ramdisk test failed"
+    exit -1
+fi
+
 echo "unitest pass"
