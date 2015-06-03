@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # Find where is this script
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+D="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # images
-CM_IMAGE=cm_revolution-4.4.4-cm11-1433289809.zip-boot.img
-ANDROID_IMAGE=revolution-4.2.2-1397040567.zip-boot.img
-FFOS_IMAGE=revolution-FFOS_v2.0-1429720398.zip-boot.img
+CM_IMAGE=$D/cm_revolution-4.4.4-cm11-1433289809.zip-boot.img
+ANDROID_IMAGE=$D/revolution-4.2.2-1397040567.zip-boot.img
+FFOS_IMAGE=$D/revolution-FFOS_v2.0-1429720398.zip-boot.img
 
 # tools
-PACK=${DIR}/../pack_intel
-UNPACK=${DIR}/../unpack_intel
+PACK=${D}/../pack_intel
+UNPACK=${D}/../unpack_intel
 
 # testing function
 check_image_unpack() {
