@@ -15,4 +15,5 @@ install:
   - sudo apt-get install -qq build-essential
 
 script:
+  - make
   - test/test.sh
